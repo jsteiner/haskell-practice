@@ -2,7 +2,7 @@ import System.IO
 import Data.List (isInfixOf, group)
 
 main :: IO ()
-main =  do
+main = do
   fromHandle <- openFile "input" ReadMode
   contents   <- hGetContents fromHandle
   putStr . show . length . niceStrings . lines $ contents
