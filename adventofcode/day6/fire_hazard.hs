@@ -1,5 +1,6 @@
 module Main where
 
+import Control.Monad (void)
 import Text.ParserCombinators.Parsec
 import Data.List (foldl')
 import Data.Text (Text)
@@ -41,9 +42,9 @@ parseInstruction = do
     t <- parseToggle
         <|> parseTurnOn
         <|> parseTurnOff
-    _ <- space
+    void space
     p1 <- parsePoint
-    _ <- string " through "
+    void $ string " through "
     p2 <- parsePoint
 
     return $ t (p1, p2)
@@ -60,7 +61,7 @@ parseTurnOff = try $ string "turn off" >> pure TurnOff
 parsePoint :: Parser Point
 parsePoint = do
     x <- many1 digit
-    _ <- string ","
+    void $ string ","
     y <- many1 digit
 
     pure (read x, read y)
